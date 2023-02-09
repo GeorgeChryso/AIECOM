@@ -4,30 +4,27 @@ import { useQuery, gql } from '@apollo/client';
 
 
 // sample gql query
-const GET_LOCATIONS = gql`
-  query GetLocations {
-    locations {
+const GET_BOOKS = gql`
+  query books {
+    books {
       id
-      name
-      description
-      photo
+      title
+      author
     }
   }
 `;
 
 function DisplayLocations() {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
+  const { loading, error, data } = useQuery(GET_BOOKS);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
-  return data.locations.map(({ id, name, description, photo }) => (
+  return data.books.map(({ id, title, author}) => (
     <div key={id}>
-      <h3>{name}</h3>
-      <img width="400" height="250" alt="location-reference" src={`${photo}`} />
+      <h3>{title}</h3>
       <br />
-      <b>About this location:</b>
-      <p>{description}</p>
+      <b>About this author: {author}</b>
       <br />
     </div>
   ));
@@ -40,6 +37,7 @@ function App() {
     <div className="App">
       HI
       <DisplayLocations/>
+      
     </div>
   );
 }
